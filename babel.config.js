@@ -1,42 +1,40 @@
-module.exports = function(api) {
-  const isBabelLoader = api.caller(caller => caller.name === 'babel-loader');
+// eslint-disable-next-line no-undef
+module.exports = function (api) {
   const env = api.env();
 
   let dev = false;
   let modules;
 
   switch (env) {
-    case 'dist-dev':
+    case "dist-dev":
       dev = true;
       modules = false;
       break;
-    case 'dist-prod':
-    case 'esm':
+    case "dist-prod":
+    case "esm":
       modules = false;
       break;
-    case 'cjs':
+    case "cjs":
     default:
-      modules = 'commonjs';
+      modules = "commonjs";
   }
 
   return {
     presets: [
-      [
-        "@babel/preset-typescript"
-      ],
+      ["@babel/preset-typescript"],
       [
         "@babel/preset-env",
         {
-          "modules": modules
-        }
+          modules: modules,
+        },
       ],
       [
         "@babel/preset-react",
         {
-          "development": dev,
-          "throwIfNamespace": false
-        }
-      ]
+          development: dev,
+          throwIfNamespace: false,
+        },
+      ],
     ],
     plugins: [
       "@babel/plugin-proposal-export-namespace-from",
@@ -51,20 +49,9 @@ module.exports = function(api) {
       [
         "@babel/plugin-proposal-decorators",
         {
-          "legacy": true
-        }
+          legacy: true,
+        },
       ],
-      ...(isBabelLoader ? [
-        ["import", { "libraryName": "antd", "style": "css" }, 'antd'],
-        ["import", { "libraryName": "@ant-design/icons", "libraryDirectory": "", camel2DashComponentName: false }, '@ant-design/icons'],
-      ] : [
-        ["import", { "libraryName": "antd" }, 'antd'],
-        ["import", { "libraryName": "@ant-design/icons", "libraryDirectory": "", camel2DashComponentName: false }, '@ant-design/icons'],
-        ["transform-rename-import", {
-          "original": "^(.+?)\\.scss$",
-          "replacement": "$1.css"
-        }]
-      ])
-    ]
-  }
-}
+    ],
+  };
+};

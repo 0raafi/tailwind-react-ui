@@ -1,17 +1,16 @@
-const path = require("path");
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = (distRoot, optimize) => ({
-  mode: 'production',
+  mode: "production",
   optimization: {
     minimize: !!optimize,
   },
-  entry: './src/index.ts',
+  entry: "./src/index.ts",
   output: {
     path: distRoot,
-    filename: optimize ? 'clodeo.min.js' : 'clodeo.js',
-    library: 'ClodeoUI',
-    libraryTarget: 'umd',
+    filename: optimize ? "clodeo.min.js" : "clodeo.js",
+    library: "ClodeoUI",
+    libraryTarget: "umd",
   },
   module: {
     rules: [
@@ -19,10 +18,10 @@ module.exports = (distRoot, optimize) => ({
         test: /\.[tj]sx?$/,
         exclude: /__tests__/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
             cacheDirectory: true,
-            envName: `dist-${optimize ? 'prod' : 'dev'}`,
+            envName: `dist-${optimize ? "prod" : "dev"}`,
           },
         },
       },
@@ -30,38 +29,19 @@ module.exports = (distRoot, optimize) => ({
         test: /\.(css|scss)$/,
         sideEffects: true,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              esModule: false
-            }
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 2,
-              esModule: false,
-              modules: {
-                namedExport: false,
-                localIdentName: "[name]__[local]",
-              },
-            },
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true
-            },
-          },
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "sass-loader",
+          "postcss-loader",
         ],
       },
       {
         test: /\.(otf|eot|ttf|woff|woff2)$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: '[name].[ext]',
+              name: "[name].[ext]",
               emitFile: true,
             },
           },
@@ -71,10 +51,10 @@ module.exports = (distRoot, optimize) => ({
         test: /\.(gif|svg|png|jpe?g)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
               limit: 1024,
-              name: '[name].[ext]',
+              name: "[name].[ext]",
               emitFile: true,
             },
           },
@@ -85,28 +65,25 @@ module.exports = (distRoot, optimize) => ({
   plugins: [
     new MiniCssExtractPlugin({
       runtime: false,
-      filename:  'styles.css',
+      filename: "styles.css",
       ignoreOrder: false, // Enable to remove warnings about conflicting order
     }),
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    extensions: [".js", ".jsx", ".ts", ".tsx"],
   },
   externals: {
     react: {
-      root: 'React',
-      commonjs2: 'react',
-      commonjs: 'react',
-      amd: 'react',
+      root: "React",
+      commonjs2: "react",
+      commonjs: "react",
+      amd: "react",
     },
-    'react-dom': {
-      root: 'ReactDOM',
-      commonjs2: 'react-dom',
-      commonjs: 'react-dom',
-      amd: 'react-dom',
+    "react-dom": {
+      root: "ReactDOM",
+      commonjs2: "react-dom",
+      commonjs: "react-dom",
+      amd: "react-dom",
     },
-    antd: 'antd',
-    '@ant-design/charts': 'AntDesignCharts',
-    '@ant-design/icons': 'AntDesignIcons',
   },
 });
