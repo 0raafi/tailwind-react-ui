@@ -1,0 +1,21 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "react"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended"
+  ],
+  "rules": {
+    "react/jsx-sort-default-props": "off",
+    "@typescript-eslint/no-namespace": "off"
+  },
+  "globals": {
+    "isCrawler": true,
+    "google": true
+  }
+}

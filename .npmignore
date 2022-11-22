@@ -1,0 +1,7 @@
+src/
+lib/**/*.stories.js
+lib/**/**/*.stories.js
+lib/**/__tests__
+lib/**/**/__tests__
+lib/**/*.spec.js
+lib/**/**/*.spec.js
